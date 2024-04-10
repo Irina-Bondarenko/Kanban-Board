@@ -25,6 +25,7 @@ function InputComponent() {
     repoLink: inputValue,
     currentPage = 1,
     sorting = "",
+    changes,
   } = useSelector((state: RootState) => state.issues);
 
   const inputValueHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {

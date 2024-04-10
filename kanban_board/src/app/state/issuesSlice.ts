@@ -5,6 +5,11 @@ export interface Issue {
   [key: string]: any;
 }
 
+export interface Changes {
+  url: string;
+  changedData: Issue[];
+}
+
 export interface IssuesState {
   value: Issue[];
   repoRating: string;
@@ -14,6 +19,7 @@ export interface IssuesState {
   totalPages: number;
   currentPage: number;
   sorting: string;
+  changes: Changes[];
 }
 
 const initialState: IssuesState = {
@@ -25,6 +31,7 @@ const initialState: IssuesState = {
   totalPages: 0,
   currentPage: 1,
   sorting: "",
+  changes: [],
 };
 
 export const issuesSlice = createSlice({
@@ -32,7 +39,14 @@ export const issuesSlice = createSlice({
   initialState,
   reducers: {
     addIssues: (state, action: PayloadAction<Issue[]>) => {
-      state.value = action.payload;
+      if (state.changes.find((change) => change.url === state.repoLink)) {
+        const changedData =
+          state.changes.find((change) => change.url === state.repoLink)
+            ?.changedData || [];
+        state.value = changedData;
+      } else {
+        state.value = action.payload;
+      }
     },
 
     loading: (state, action: PayloadAction<boolean>) => {
@@ -54,6 +68,10 @@ export const issuesSlice = createSlice({
       );
 
       state.value = updatedValue;
+      state.changes = [
+        ...state.changes,
+        { url: state.repoLink, changedData: updatedValue },
+      ];
     },
     addRepoUserLink: (state, action: PayloadAction<string>) => {
       state.repoLink = action.payload;
