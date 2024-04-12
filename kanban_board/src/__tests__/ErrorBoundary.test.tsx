@@ -25,7 +25,7 @@ describe("ErrorBoundary", () => {
     expect(container).toHaveTextContent("Child component");
   });
 
-  test("Renders fallback component when child throws an error", () => {
+  test("renders fallback component when child throws an error", () => {
     render(
       <ErrorBoundary fallbackComponent={<FallbackComponent />}>
         <ChildComponent />
