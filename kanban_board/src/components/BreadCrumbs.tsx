@@ -11,17 +11,18 @@ import {
 } from "@chakra-ui/react";
 import { ChevronRightIcon, StarIcon } from "@chakra-ui/icons";
 
-function BreadCrumbs() {
+const BreadCrumbs = () => {
   const {
     repoRating,
     userLink,
     repoLink,
     value: issues,
+    isLoading,
   } = useSelector((state: RootState) => state.issues);
 
   return (
     <>
-      {issues.length !== 0 && (
+      {issues.length !== 0 && !isLoading && (
         <Flex py={4} gap="8">
           <Breadcrumb
             spacing="8px"
@@ -52,6 +53,6 @@ function BreadCrumbs() {
       )}
     </>
   );
-}
+};
 
 export default BreadCrumbs;

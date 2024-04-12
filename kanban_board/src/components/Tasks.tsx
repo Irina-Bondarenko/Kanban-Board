@@ -7,10 +7,10 @@ import { changeIssueItemStatus } from "../app/state/issuesSlice";
 
 import { Flex, Spinner, Text } from "@chakra-ui/react";
 
-function Tasks() {
+const Tasks = () => {
   const dispatch = useDispatch();
 
-  const { value: issues, isLoading: isLoading } = useSelector(
+  const { value: issues, isLoading } = useSelector(
     (state: RootState) => state.issues,
   );
 
@@ -79,7 +79,7 @@ function Tasks() {
   return (
     <>
       {isLoading ? (
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" my={8}>
           <Spinner
             thickness="4px"
             speed="0.8s"
@@ -91,7 +91,7 @@ function Tasks() {
       ) : (
         <>
           {issues.length === 0 ? (
-            <Flex justifyContent="center">
+            <Flex justifyContent="center" my={10}>
               <Text as="b" fontSize="xl" textAlign="center" color="#285E61">
                 No issues yet
               </Text>
@@ -115,6 +115,6 @@ function Tasks() {
       )}
     </>
   );
-}
+};
 
 export default Tasks;

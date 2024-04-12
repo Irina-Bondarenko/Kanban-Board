@@ -14,10 +14,11 @@ import {
 import Pagination from "./Pagination";
 import Sorting from "./Sorting";
 import InputLink from "./InputLink";
+import BreadCrumbs from "../components/BreadCrumbs";
 
 const ITEMS_PER_PAGE = 50;
 
-function InputComponent() {
+const InputComponent = () => {
   const dispatch = useDispatch();
   const {
     value: issues,
@@ -25,7 +26,7 @@ function InputComponent() {
     repoLink: inputValue,
     currentPage = 1,
     sorting = "",
-    changes,
+    isLoading,
   } = useSelector((state: RootState) => state.issues);
 
   const inputValueHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -115,13 +116,14 @@ function InputComponent() {
   );
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" data-testid="input-component">
       <InputLink
         inputValue={inputValue}
         inputValueHandler={inputValueHandler}
         buttonSubmitHandler={buttonSubmitHandler}
       />
-      {issues.length !== 0 && (
+      <BreadCrumbs />
+      {issues.length !== 0 && !isLoading && (
         <Box py={4}>
           <Pagination
             currentPage={currentPage}
@@ -130,11 +132,13 @@ function InputComponent() {
           />
         </Box>
       )}
-      <Box py={4}>
-        <Sorting onSort={onSortHandler} onResetHandler={onResetHandler} />
-      </Box>
+      {issues.length !== 0 && !isLoading && (
+        <Box py={4}>
+          <Sorting onSort={onSortHandler} onResetHandler={onResetHandler} />
+        </Box>
+      )}
     </Flex>
   );
-}
+};
 
 export default InputComponent;

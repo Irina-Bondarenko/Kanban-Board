@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import issuesReducer from "./state/issuesSlice";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   issues: issuesReducer,
 });
 

@@ -46,7 +46,7 @@ const TaskItem: React.FC<ITaskItemProps> = ({
       </Text>
       <Text fontSize="md">{`#${number} opened ${daysOpenedAgo} days ago`}</Text>
       <Flex alignItems="center">
-        <Text fontSize="md">{user.type}</Text>
+        <Text fontSize="md">{user ? user?.type : "Loading..."}</Text>
         <Icon viewBox="0 0 100 100" color="black">
           <rect x="48" y="0" width="4" height="100" fill="currentColor" />
         </Icon>
